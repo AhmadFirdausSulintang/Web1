@@ -1,0 +1,72 @@
+    * {
+        margin: 0px;
+        padding: 0px;
+    }
+
+    body {
+        background-color: rgb(184, 184, 184);
+        font-family: poppins;
+    }
+
+    header {
+        padding: 30px;
+        background-color: rgb(61, 61, 61);
+        color: white;
+    }
+
+    header h1 {
+        text-align: center;
+    }
+
+    .bio {
+        margin-left: 20%;
+        margin-right: 20%;
+        padding: 20px;
+        background-color: white;
+        border-radius: 5px;
+        text-align: center;
+    }
+
+    .bio img {
+        margin: 20px;
+        width: 20%;
+        border-radius: 10px;
+    }
+
+    .table {
+        text-align: left;
+        font-size: small;
+        margin-left: 38%;
+    }
+
+    .deskripsi {
+        margin: 5px;
+        margin-left: 20%;
+        margin-right: 20%;
+        padding: 20px;
+        background-color: white;
+        border-radius: 5px;
+    }
+
+    .kontak {
+        margin: 5px;
+        margin-left: 20%;
+        margin-right: 20%;
+        padding: 20px;
+        background-color: white;
+        border-radius: 5px;
+    }
+
+    .kontak address {
+        text-align: center;
+    }
+
+    .kontak a {
+        text-decoration: none;
+        text-align: right;
+    }
+
+    footer {
+        padding: 20px;
+        background-color: rgb(34, 34, 34);
+    }
