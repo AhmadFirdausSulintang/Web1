@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Lowongan Pekerjaan</title>
+    <link rel="stylesheet" href="../bootstrap/bootstrap.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Daftar Lowongan Pekerjaan</h2>
+        <!-- Form for Create/Update -->
+         <form id="guestForm" class="mb-4">
+            <div class="form-group">
+                <label for="guestKode">Nama Perusahaan:</label>
+                <input type="text" class="form-control" id="guestNama" required>
+            </div>
+            <div class="form-group">
+                <label for="guestNama">Posisi yang di butuhkan:</label>
+                <input type="text" class="form-control" id="guestPosisi" required>
+            </div>
+            <div class="form-group">
+                <label for="guestEmail">Deskripsi Pekerjaan:</label>
+                <input type="text" class="form-control" id="guestDeskripsi" required>
+            </div>
+            <div class="form-group">
+                <label for="guestPesan">Kualifikasi yang di butuhkan:</label>
+                <input type="text" class="form-control" id="guestKualifikasi" required>
+            </div>
+            <div class="form-group">
+                <label for="guestPesan">Lokasi kerja:</label>
+                <input type="text" class="form-control" id="guestLokasi" required>
+            </div>
+            <div class="form-group">
+                <label for="guestPesan">Tanggal batas Pengiriman Lamaran:</label>
+                <input type="date" class="form-control" id="guestTanggal" required>
+            </div>
+            <br>
+            <div>
+                <button type="submit" class="btn btn-primary" id="submitBtn">Add Guest</button>
+            </div>
+         </form>
+        <!-- Table to Display -->
+         <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Nama Perusahaan</th>
+                    <th>Posisi</th>
+                    <th>Deskripsi</th>
+                    <th>Kualifikasi</th>
+                    <th>Lokasi</th>
+                    <th>Tanggal</th>
+                    <th>Keterangan</th>
+                    <!-- <th>Action</th> -->
+                </tr>
+            </thead>
+            <tbody id="guestTableBody">
+                <!-- Guest rows will be Appended here -->
+            </tbody>
+         </table>
+    </div>
+    <script>
+        $(document).ready(function(){
+            const script_url='https://script.google.com/macros/s/AKfycbysW03LwpdK9GEFXdo9kQOZ873ZkcmAfZJ-m5_kEaXe8HAuf9gIEKX3UyhWK8VogICc/exec';
+            //Load guests on page load
+            loadGuests();
+            //load guests into the table
+            function loadGuests(){
+                $.ajax({
+                    url:script_url,
+                    type:"GET",
+                    data:{action:"read"},
+                    dataType:"json",
+                    success: function(response){
+                        const tbody=$('#guestTableBody');
+                        tbody.empty();
+
+                        response.forEach(guest=>{
+                            tbody.append(`
+                            <tr>
+                                <td>${guest.Nama_perusahaan}</td>
+                                <td>${guest.Posisi}</td>
+                                <td>${guest.Deskripsi}</td>
+                                <td>${guest.Kualifikasi}</td>
+                                <td>${guest.Lokasi}</td>
+                                <td>${guest.Tanggal}</td>
+                            </tr>
+                            `);
+                        });
+                    },
+                    error:function(jqXHR,textStatus,errorThrown){
+                        console.error("Request failed:",textStatus,errorThrown);
+                    }
+                });
+            }
+
+            //Handle form submit for create/update
+            $('#guestForm').on('submit',function(event){
+                event.preventDefault();
+                const nama = $('#guestNama').val();
+                const posisi = $('#guestPosisi').val();
+                const deskripsi = $('#guestDeskripsi').val();
+                const lokasi = $('#guestLokasi').val();
+                const tanggal = $('#guestTanggal').val();
+                $.ajax({
+                    url:script_url,
+                    type:"GET",
+                    dataType:"jsonp",
+                    data:{Nama_perusahaan:nama, Posisi:posisi, Deskripsi:deskripsi, Lokasi:lokasi, Tanggal:tanggal, action:'insert'},
+                    success:function(response){
+                        alert(response.result);
+                        loadGuests();
+                    },
+                    error:function(jqXHR,textStatus,errorThrown){
+                        console.error("Request failed:",textStatus,errorThrown);
+                    }
+                });
+            });
+        }); 
+    </script>
+     <script src="../bootstrap/bootstrap.bundle.js"></script>
+</body>
+</html>

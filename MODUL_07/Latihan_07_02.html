@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buku Tamu CRUD</title>
+    <link rel="stylesheet" href="bootstrap/bootstrap.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="bootstrap/bootstrap.bundle.js"></script>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Buku Tamu</h2>
+        <!-- Form for Create/Update -->
+         <form id="guestForm" class="mb-4">
+            <div class="form-group">
+                <label for="guestKode">Kode:</label>
+                <input type="text" class="form-control" id="guestKode" required>
+            </div>
+            <div class="form-group">
+                <label for="guestNama">Nama:</label>
+                <input type="text" class="form-control" id="guestNama" required>
+            </div>
+            <div class="form-group">
+                <label for="guestEmail">Email:</label>
+                <input type="text" class="form-control" id="guestEmail" required>
+            </div>
+            <div class="form-group">
+                <label for="guestPesan">Pesan:</label>
+                <input type="text" class="form-control" id="guestPesan" required>
+            </div>
+            <button type="submit" class="btn btn-primary" id="submitBtn">Add Guest</button>
+         </form>
+        <!-- Table to Display -->
+         <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Kode</th>
+                    <th>Nama</th>
+                    <th>Email</th>
+                    <th>Pesan</th>
+                    <!-- <th>Action</th> -->
+                </tr>
+            </thead>
+            <tbody id="guestTableBody">
+                <!-- Guest rows will be Appended here -->
+            </tbody>
+         </table>
+    </div>
+
+    <script>
+        $(document).ready(function(){
+            const script_url='https://script.google.com/macros/s/AKfycbz3GI3vccj0MabR5SqPc_SL-5MTKPb5v8H84cmbPI6C2FPh2meBdh8LjuBI9WUk8Xwr/exec';
+            //Load guests on page load
+            loadGuests();
+            //load guests into the table
+            function loadGuests(){
+                $.ajax({
+                    url:script_url,
+                    type:"GET",
+                    data:{action:"read"},
+                    dataType:"json",
+                    success: function(response){
+                        const tbody=$('#guestTableBody');
+                        tbody.empty();
+
+                        response.forEach(guest=>{
+                            tbody.append(`
+                            <tr>
+                                <td>${guest.Kode}</td>
+                                <td>${guest.Nama}</td>
+                                <td>${guest.Email}</td>
+                                <td>${guest.Pesan}</td>
+                            </tr>
+                            `);
+                        });
+                    },
+                    error:function(jqXHR,textStatus,errorThrown){
+                        console.error("Request failed:",textStatus,errorThrown);
+                    }
+                });
+            }
+
+            //Handle form submit for create/update
+            $('#guestForm').on('submit',function(event){
+                event.preventDefault();
+                const kode = $('#guestKode').val();
+                const nama = $('#guestNama').val();
+                const email = $('#guestEmail').val();
+                const pesan = $('#guestPesan').val();
+                $.ajax({
+                    url:script_url,
+                    type:"GET",
+                    dataType:"jsonp",
+                    data:{Kode:kode, Nama:nama, Email:email, Pesan:pesan, action:'insert'},
+                    success:function(response){
+                        alert(response.result);
+                        loadGuests();
+                    },
+                    error:function(jqXHR,textStatus,errorThrown){
+                        console.error("Request failed:",textStatus,errorThrown);
+                    }
+                });
+            });
+        }); 
+    </script>
+</body>
+</html>
