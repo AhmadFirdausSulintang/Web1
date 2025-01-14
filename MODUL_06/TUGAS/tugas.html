@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Lowongan Pekerjaan</title>
+    <link rel="stylesheet" href="../latihan/bootstrap/bootstrap.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Daftar Lowongan Pekerjaan</h2>
+        <!-- Form for Create/Update -->
+         <form id="guestForm" class="mb-4">
+            <div class="form-group">
+                <label for="guestKode">Nama Perusahaan:</label>
+                <input type="text" class="form-control" id="guestNama" required>
+            </div>
+            <div class="form-group">
+                <label for="guestNama">Posisi yang di butuhkan:</label>
+                <input type="text" class="form-control" id="guestPosisi" required>
+            </div>
+            <div class="form-group">
+                <label for="guestEmail">Deskripsi Pekerjaan:</label>
+                <input type="text" class="form-control" id="guestDeskripsi" required>
+            </div>
+            <div class="form-group">
+                <label for="guestPesan">Kualifikasi yang di butuhkan:</label>
+                <input type="text" class="form-control" id="guestKualifikasi" required>
+            </div>
+            <div class="form-group">
+                <label for="guestPesan">Lokasi kerja:</label>
+                <input type="text" class="form-control" id="guestLokasi" required>
+            </div>
+            <div class="form-group">
+                <label for="guestPesan">Tanggal batas Pengiriman Lamaran:</label>
+                <input type="date" class="form-control" id="guestTanggal" required>
+            </div>
+            <br>
+            <div>
+                <button type="submit" class="btn btn-primary" id="submitBtn">Add Guest</button>
+            </div>
+         </form>
+        <!-- Table to Display -->
+         <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Nama Perusahaan</th>
+                    <th>Posisi</th>
+                    <th>Deskripsi</th>
+                    <th>Kualifikasi</th>
+                    <th>Lokasi</th>
+                    <th>Tanggal</th>
+                    <th>Keterangan</th>
+                    <!-- <th>Action</th> -->
+                </tr>
+            </thead>
+            <tbody id="guestTableBody">
+                <!-- Guest rows will be Appended here -->
+            </tbody>
+         </table>
+    </div>
+     <script src="../bootstrap/bootstrap.bundle.js"></script>
+</body>
+</html>
